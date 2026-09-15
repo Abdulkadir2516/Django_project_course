@@ -8,7 +8,7 @@ from . import views
 
 
 urlpatterns = [   
-    path('', views.home),   
+    path('', views.index),   
     path('list', views.kurslar),
     path('<kurs_adi>', views.detay),
     path('kategori/<int:category_id>',views.getCoursesByCategoryId),
