@@ -7,24 +7,20 @@ data = {
     "programlama": "Programlama kategorisine göre kurslar listeleniyor...",
     "mobil-uygulamalar": "Mobil uygulamalar kategorisine göre kurslar listeleniyor...",
     "web-gelistirme": "Web geliştirme kategorisine göre kurslar listeleniyor...",
+    
 }
 
 
-def index(request):
-    return render(request, 'courses/index.html')
-
 # Create your views here.
-def home(request):
-    list_items = ""
+def index(request):
+    categories_list = list(data.keys())
 
-    category_list = list(data.keys())
-    for category in category_list:
-        redirect_url = reverse('getCoursesByCategory', args=[category])
-        list_items += f'<li><a href="{redirect_url}">{category}</a></li>'
+    
 
-    html = f"<h1>Kurslar anasayfası</h1><br><ul>{list_items}</ul>"
 
-    return HttpResponse(html)
+    return render(request, 'courses/index.html', {
+        "categories": categories_list
+    })
 
 def kurslar(request):
     return HttpResponse("<h1>Kurslar sayfası</h1>")
