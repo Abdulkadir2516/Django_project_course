@@ -1,5 +1,5 @@
 
-from datetime import date
+from datetime import date, datetime
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -19,7 +19,7 @@ db = {
             "description": "Python programlama dili ile ilgili kurslar listeleniyor...",
             "image": "https://sudo.ubuntu-tr.net/assets/post/pyhton-programlama-seri-i/pyhton-programlama.jpeg",
             "slug": "python-programlama",
-            "date": date(2023, 1, 1),
+            "date": datetime.now(),
             "isActive": True,
             "isupdated": True
         },
