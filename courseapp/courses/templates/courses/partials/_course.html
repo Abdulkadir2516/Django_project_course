@@ -7,6 +7,12 @@
             <div class="card-body">
                 <h5 class="card-title">{{ course.title }}</h5>
                 <p class="card-text">{{ course.description }}</p>
+                <p class="card-text"><small class="text-muted">Yayınlanma Tarihi: {{ course.date }}</small></p>
+                {% if course.isupdated %}
+                    <span class="badge bg-success">Güncel</span>
+                {% else %}
+                    <span class="badge bg-danger">Güncel Değil</span>
+                {% endif %}
             </div>
         </div>
         

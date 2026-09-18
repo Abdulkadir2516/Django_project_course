@@ -20,7 +20,8 @@ db = {
             "image": "https://sudo.ubuntu-tr.net/assets/post/pyhton-programlama-seri-i/pyhton-programlama.jpeg",
             "slug": "python-programlama",
             "date": date(2023, 1, 1),
-            "is_active": True
+            "isActive": True,
+            "isupdated": True
         },
         {
             "title": "Java Programlama",
@@ -28,7 +29,9 @@ db = {
             "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo4kBug2N2HU9AGwL2YpEaGgwNHv0NlM6ABML60CwWYXvD8czZb-njwrL3&s=10",
             "slug": "java-programlama",
             "date": date(2023, 1, 1),
-            "is_active": True
+            "isActive": False,            
+            "isupdated": True
+
         },
         {
             "title": "C# Programlama",
@@ -36,7 +39,9 @@ db = {
             "image": "https://www.kozmoslisesi.com/wp-content/uploads/2021/03/c-sharp-nedir.jpeg",
             "slug": "csharp-programlama",
             "date": date(2023, 1, 1),
-            "is_active": True
+            "isActive": True,
+            "isupdated": False
+
         },
         {
             "title": "JavaScript Programlama",
@@ -44,7 +49,8 @@ db = {
             "image": "https://www.infoworld.com/wp-content/uploads/2025/09/2263137-0-59682900-1757000713-shutterstock_1361674454-100939444-orig.jpg?quality=50&strip=all&w=1024",
             "slug": "javascript-programlama",
             "date": date(2023, 1, 1),
-            "is_active": True
+            "isActive": False,
+            "isupdated": False
 
         },
         {
@@ -53,7 +59,8 @@ db = {
             "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7JU8ig4hAX3LKfxXMNgZxPlZG0vzIxdIrKtKuX3-MrQXOQE0t9j6XSdg&s=10",
             "slug": "php-programlama",
             "date": date(2023, 1, 1),
-            "is_active": True
+            "isActive": True,
+            "isupdated": True
         }
 
     ],
@@ -66,7 +73,7 @@ db = {
 # Create your views here.
 def index(request):
 
-    kurslar = db["courses"]
+    kurslar = [course for course in db["courses"] if course["isActive"]]
     kategori_listesi = db["categories"]
     
 
