@@ -17,7 +17,7 @@ db = {
         {
             "title": "Python Programlama",
             "description": "Python programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "https://sudo.ubuntu-tr.net/assets/post/pyhton-programlama-seri-i/pyhton-programlama.jpeg",
+            "image": "python.jpeg",
             "slug": "python-programlama",
             "date": datetime.now(),
             "isActive": True,
@@ -26,7 +26,7 @@ db = {
         {
             "title": "Java Programlama",
             "description": "Java programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo4kBug2N2HU9AGwL2YpEaGgwNHv0NlM6ABML60CwWYXvD8czZb-njwrL3&s=10",
+            "image": "java.jpg",
             "slug": "java-programlama",
             "date": date(2023, 1, 1),
             "isActive": False,            
@@ -36,7 +36,7 @@ db = {
         {
             "title": "C# Programlama",
             "description": "C# programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "https://www.kozmoslisesi.com/wp-content/uploads/2021/03/c-sharp-nedir.jpeg",
+            "image": "c-sharp.jpeg",
             "slug": "csharp-programlama",
             "date": date(2023, 1, 1),
             "isActive": True,
@@ -46,7 +46,7 @@ db = {
         {
             "title": "JavaScript Programlama",
             "description": "JavaScript programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "https://www.infoworld.com/wp-content/uploads/2025/09/2263137-0-59682900-1757000713-shutterstock_1361674454-100939444-orig.jpg?quality=50&strip=all&w=1024",
+            "image": "javascript.jpg",
             "slug": "javascript-programlama",
             "date": date(2023, 1, 1),
             "isActive": False,
@@ -56,7 +56,7 @@ db = {
         {
             "title": "PHP Programlama",
             "description": "PHP programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7JU8ig4hAX3LKfxXMNgZxPlZG0vzIxdIrKtKuX3-MrQXOQE0t9j6XSdg&s=10",
+            "image": "php.jpg",
             "slug": "php-programlama",
             "date": date(2023, 1, 1),
             "isActive": True,
