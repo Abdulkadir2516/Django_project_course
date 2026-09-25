@@ -4,6 +4,7 @@ from datetime import date, datetime
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from .models import Course
 
 data = {
     "programlama": "Programlama kategorisine göre kurslar listeleniyor...",
@@ -73,7 +74,7 @@ db = {
 # Create your views here.
 def index(request):
 
-    kurslar = [course for course in db["courses"] if course["isActive"]]
+    kurslar = Course.objects.filter(isActive=True)
     kategori_listesi = db["categories"]
     
 

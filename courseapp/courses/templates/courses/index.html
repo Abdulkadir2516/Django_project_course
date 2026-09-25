@@ -33,14 +33,7 @@
             <div class="col-9">
 
                 {% for course in courses %}
-                    {% if course.isActive %}
                         {% include 'courses/partials/_course.html' %}
-                    
-                    {% else %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ course.title }} kursu aktif değildir.
-                        </div>
-                    {% endif %}
                     
                     
                 {% endfor %}
