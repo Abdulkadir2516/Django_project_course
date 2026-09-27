@@ -8,7 +8,7 @@ class Course(models.Model):
     imageUrl = models.CharField(max_length=50, blank=False)
     date = models.DateField()
     isActive = models.BooleanField(default=True)
-    slug = models.SlugField(null=False, default="")
+    slug = models.SlugField(null=False, default="", unique=True, db_index=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

@@ -87,7 +87,7 @@ def index(request):
 def kurslar(request):
     return HttpResponse("<h1>Kurslar sayfası</h1>")
 
-def detay(request, kurs_id): 
+def detay(request, slug): 
     
     """try:
             
@@ -96,7 +96,7 @@ def detay(request, kurs_id):
     except:
         raise Http404("Kurs bulunamadı...")"""
 
-    course = get_object_or_404(Course, pk=kurs_id)
+    course = get_object_or_404(Course, slug=slug)
 
     contex = {
                 "course": course 
