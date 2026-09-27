@@ -1,8 +1,8 @@
 
 from datetime import date, datetime
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.http import Http404, HttpResponse, HttpResponseNotFound
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from .models import Course ,Categories
 
@@ -72,6 +72,7 @@ db = {
     ]
 }
 # Create your views here.
+
 def index(request):
 
     kurslar = Course.objects.filter(isActive=True)
@@ -86,8 +87,23 @@ def index(request):
 def kurslar(request):
     return HttpResponse("<h1>Kurslar sayfası</h1>")
 
-def detay(request, kurs_adi): 
-    return HttpResponse(f"{kurs_adi} kurs detayları...")   
+def detay(request, kurs_id): 
+    
+    """try:
+            
+        course = Course.objects.get(pk=kurs_id)
+        
+    except:
+        raise Http404("Kurs bulunamadı...")"""
+
+    course = get_object_or_404(Course, pk=kurs_id)
+
+    contex = {
+                "course": course 
+            }
+    return render(request, 'courses/details.html', contex)
+
+
 
 def getCoursesByCategory(request, category_name):
 

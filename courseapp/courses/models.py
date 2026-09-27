@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.text import slugify
 # Create your models here.
 
 class Course(models.Model):
@@ -8,15 +8,19 @@ class Course(models.Model):
     imageUrl = models.CharField(max_length=50, blank=False)
     date = models.DateField()
     isActive = models.BooleanField(default=True)
+    slug = models.SlugField(null=False, default="")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Course, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return self.title
 
 class Categories(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     description = models.TextField()
-    slug = models.SlugField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name

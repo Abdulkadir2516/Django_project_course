@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row">
+           <div class="col-3">
+
+                <img src="{% static 'courses/img/'|add:course.imageUrl %}" class="img-fluid rounded-start" alt="{{ course.title }}">
+
+            </div>
+
+            <div class="col-9">
+                <h3>{{ course.title }}</h3>
+                <p>{{ course.description }}</p>
+           </div>
+            
+            
+            
+
+        </div>
+            
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %} {{course.title}} {% endblock %}
