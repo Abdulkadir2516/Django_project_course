@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Categories
+from .models import Course, Category
 # Register your models here.
 
 @admin.register(Course)
@@ -12,8 +12,8 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ("title", "description")
 
 
-@admin.register(Categories)
-class CategoriesAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "description")
     search_fields = ("name", "description")
 
