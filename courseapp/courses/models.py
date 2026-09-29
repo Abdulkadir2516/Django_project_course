@@ -2,6 +2,13 @@ from django.db import models
 from django.utils.text import slugify
 # Create your models here.
 
+class Categories(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
 class Course(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
@@ -9,6 +16,7 @@ class Course(models.Model):
     date = models.DateField()
     isActive = models.BooleanField(default=True)
     slug = models.SlugField(null=False,blank=True, default="", editable=False, unique=True, db_index=True)
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE, default=1)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -18,9 +26,3 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title} {self.date}"
 
-class Categories(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
