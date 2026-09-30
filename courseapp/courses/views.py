@@ -105,29 +105,19 @@ def detay(request, slug):
 
 
 
-def getCoursesByCategory(request, category_name):
+def getCoursesByCategory(request, slug):
 
-    try: 
-        text = db[category_name]
-        return render(request, 'courses/courses.html', {
-            'category': category_name, 
-            "category_text": text
+    kurslar = Course.objects.filter(category__slug=slug, isActive= True)
 
-        }
-            )
-    except :
-        return HttpResponseNotFound("Kategori bulunamadı...")
+    kategoriler = Category.objects.all()
 
-def getCoursesByCategoryId(request, category_id):
-    #return HttpResponseRedirect(f'/kurs/kategori/programlama')
+    return render(request, 'courses/index.html', {
+        "categories": kategoriler,
+        "courses": kurslar,
+        "secili_kategori": slug
 
-    category_list = list(data.keys())
+    })
 
-    if category_id < 1 or category_id > len(category_list):
-        return HttpResponseNotFound("Kategori bulunamadı...")
-    
-    category = category_list[category_id - 1]
 
-    redirect_url = reverse('getCoursesByCategory', args=[category])
+   
 
-    return redirect(redirect_url)

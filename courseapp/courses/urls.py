@@ -10,7 +10,6 @@ from . import views
 urlpatterns = [   
     path('', views.index),   
     path('<slug:slug>', views.detay, name='course_details'),
-    path('kategori/<int:category_id>',views.getCoursesByCategoryId),
-    path('kategori/<str:category_name>',views.getCoursesByCategory, name='getCoursesByCategory'),
+    path('kategori/<slug:slug>',views.getCoursesByCategory, name='getCoursesByCategory'),
 
 ]
