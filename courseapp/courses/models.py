@@ -15,12 +15,14 @@ class Course(models.Model):
     imageUrl = models.CharField(max_length=50, blank=False)
     date = models.DateField(auto_now_add=True)
     isActive = models.BooleanField(default=True)
-    slug = models.SlugField(null=False,blank=True, default="", editable=False, unique=True, db_index=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    slug = models.SlugField(null=False,blank=True, default="", editable=True, unique=True, db_index=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1, related_name="kurslar")
 
+    """
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Course, self).save(*args, **kwargs)
+        """
 
 
     def __str__(self):
