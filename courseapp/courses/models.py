@@ -16,7 +16,8 @@ class Course(models.Model):
     date = models.DateField(auto_now_add=True)
     isActive = models.BooleanField(default=True)
     slug = models.SlugField(null=False,blank=True, default="", editable=True, unique=True, db_index=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1, related_name="kurslar")
+    categories = models.ManyToManyField(Category)
+
 
     """
     def save(self, *args, **kwargs):
