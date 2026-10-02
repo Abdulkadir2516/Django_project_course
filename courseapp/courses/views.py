@@ -5,84 +5,29 @@ from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from .models import Course ,Category
+from django.core.paginator import Paginator
 
-data = {
-    "programlama": "Programlama kategorisine göre kurslar listeleniyor...",
-    "mobil-uygulamalar": "Mobil uygulamalar kategorisine göre kurslar listeleniyor...",
-    "web-gelistirme": "Web geliştirme kategorisine göre kurslar listeleniyor...",
-    
-}
-
-db = {
-    "courses": [
-        {
-            "title": "Python Programlama",
-            "description": "Python programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "python.jpeg",
-            "slug": "python-programlama",
-            "date": datetime.now(),
-            "isActive": True,
-            "isupdated": True
-        },
-        {
-            "title": "Java Programlama",
-            "description": "Java programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "java.jpg",
-            "slug": "java-programlama",
-            "date": date(2023, 1, 1),
-            "isActive": False,            
-            "isupdated": True
-
-        },
-        {
-            "title": "C# Programlama",
-            "description": "C# programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "c-sharp.jpeg",
-            "slug": "csharp-programlama",
-            "date": date(2023, 1, 1),
-            "isActive": True,
-            "isupdated": False
-
-        },
-        {
-            "title": "JavaScript Programlama",
-            "description": "JavaScript programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "javascript.jpg",
-            "slug": "javascript-programlama",
-            "date": date(2023, 1, 1),
-            "isActive": False,
-            "isupdated": False
-
-        },
-        {
-            "title": "PHP Programlama",
-            "description": "PHP programlama dili ile ilgili kurslar listeleniyor...",
-            "image": "php.jpg",
-            "slug": "php-programlama",
-            "date": date(2023, 1, 1),
-            "isActive": True,
-            "isupdated": True
-        }
-
-    ],
-    "categories": [
-        {"id":1, "name": "Programlama", "slug": "programlama"},
-        {"id":2, "name": "Mobil Uygulamalar", "slug": "mobil-uygulamalar"},
-        {"id":3, "name": "Web Geliştirme", "slug": "web-gelistirme"}
-    ]
-}
 # Create your views here.
 
 def index(request):
 
     kurslar = Course.objects.filter(isActive=True)
     kategori_listesi = Category.objects.all()
-    
+
+    paginator = Paginator(kurslar, 2)  # Her sayfada 2 kurs gösterilecek
+    page = request.GET.get('page')  # GET parametresinden sayfa numarasını al
+    course_page = paginator.get_page(page)
+
+    print(paginator.num_pages)
+    print(course_page.number)
+    print(paginator.count)
 
     return render(request, 'courses/index.html', {
         "categories": kategori_listesi,
-        "courses": kurslar
+        "courses": course_page
     })
+
+
 
 def kurslar(request):
     return HttpResponse("<h1>Kurslar sayfası</h1>")
@@ -107,13 +52,17 @@ def detay(request, slug):
 
 def getCoursesByCategory(request, slug):
 
-    kurslar = Course.objects.filter(categories__slug=slug, isActive= True)
+    kurslar = Course.objects.filter(categories__slug=slug, isActive= True).order_by('date')
 
     kategoriler = Category.objects.all()
 
+    paginator = Paginator(kurslar, 2)  # Her sayfada 2 kurs gösterilecek
+    page = 1 
+    course_page = paginator.get_page(page)
+
     return render(request, 'courses/index.html', {
         "categories": kategoriler,
-        "courses": kurslar,
+        "courses": course_page,
         "secili_kategori": slug
 
     })
