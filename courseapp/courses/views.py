@@ -14,17 +14,15 @@ def index(request):
     kurslar = Course.objects.filter(isActive=True)
     kategori_listesi = Category.objects.all()
 
-    paginator = Paginator(kurslar, 2)  # Her sayfada 2 kurs gösterilecek
-    page = request.GET.get('page')  # GET parametresinden sayfa numarasını al
-    course_page = paginator.get_page(page)
+    paginator = Paginator(kurslar, 3)  # Her sayfada 2 kurs gösterilecek
+    page = request.GET.get('page',1)  # GET parametresinden sayfa numarasını al
+    page_obj = paginator.page(page)
 
-    print(paginator.num_pages)
-    print(course_page.number)
-    print(paginator.count)
+   
 
     return render(request, 'courses/index.html', {
         "categories": kategori_listesi,
-        "courses": course_page
+        "courses": page_obj
     })
 
 
@@ -56,13 +54,17 @@ def getCoursesByCategory(request, slug):
 
     kategoriler = Category.objects.all()
 
-    paginator = Paginator(kurslar, 2)  # Her sayfada 2 kurs gösterilecek
-    page = 1 
-    course_page = paginator.get_page(page)
+    paginator = Paginator(kurslar, 3)  # Her sayfada 2 kurs gösterilecek
+    page = request.GET.get('page',1)
+    page_obj = paginator.page(page)
+
+    print(page_obj.paginator.num_pages)
+    print(page_obj.paginator.count)
 
     return render(request, 'courses/index.html', {
         "categories": kategoriler,
-        "courses": course_page,
+        "courses": page_obj,
+        "page_obj": page_obj,
         "secili_kategori": slug
 
     })
