@@ -18,6 +18,7 @@ def index(request):
 
     kurslar = Course.objects.filter(isActive=True)
     kategori_listesi = Category.objects.all()
+    courses = Course.objects.filter(isActive=True).order_by('date')
 
     paginator = Paginator(kurslar, 3)  # Her sayfada 2 kurs gösterilecek
     page = request.GET.get('page',1)  # GET parametresinden sayfa numarasını al
@@ -27,7 +28,7 @@ def index(request):
 
     return render(request, 'courses/index.html', {
         "categories": kategori_listesi,
-        "courses": page_obj
+        "courses": courses
     })
 
 def search(request):
@@ -41,14 +42,11 @@ def search(request):
     else:
         return redirect("/kurs")  # Eğer arama sorgusu boşsa anasayfaya yönlendir
 
-    paginator = Paginator(kurslar, 3)  # Her sayfada 2 kurs gösterilecek
-    page = request.GET.get('page', 1)  # GET parametresinden sayfa numarasını al
-    page_obj = paginator.page(page)
 
-    return render(request, 'courses/list.html', {
+    return render(request, 'courses/search.html', {
         "categories": kategori_listesi,
-        "courses": page_obj,
-        "page_obj": page_obj,
+        "courses": kurslar,
+        "page_obj": kurslar,
         "search_query": query  # Arama sorgusunu template'e gönder
     })
 
@@ -88,7 +86,7 @@ def getCoursesByCategory(request, slug):
     print(page_obj.paginator.num_pages)
     print(page_obj.paginator.count)
 
-    return render(request, 'courses/index.html', {
+    return render(request, 'courses/list.html', {
         "categories": kategoriler,
         "courses": page_obj,
         "page_obj": page_obj,
