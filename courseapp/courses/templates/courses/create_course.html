@@ -8,6 +8,12 @@
     <div class="container mt-3">
         <div class="row">
            <div class="col-12">
+            
+                {% if error %}
+                    <div class="alert alert-danger">
+                        Formu Eksiksiz Doldurunuz!
+                    </div>
+                {% endif %}
 
                 <form action="{% url 'create_course' %}" method="POST">
                     {% csrf_token %}

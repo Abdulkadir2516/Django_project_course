@@ -68,8 +68,11 @@ def create_kurs(request):
         )
         kurs.save()  # Kursu veritabanına kaydet
 
+        if title == "" or description == "" or image == "" or slug == "":
+            return render(request, 'courses/create_course.html', {"error": True})
 
         return redirect("/kurs")
+
 
     return render(request, 'courses/create_course.html')
 
