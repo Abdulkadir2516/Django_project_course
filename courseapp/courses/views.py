@@ -50,6 +50,28 @@ def search(request):
         "search_query": query  # Arama sorgusunu template'e gönder
     })
 
+def create_kurs(request):
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        image = request.POST.get('imageUrl')  # Dosya yükleme için request.FILES kullanılır
+        isActive = request.POST.get('isActive', False) == 'on'  # Checkbox değeri
+        slug = request.POST.get('slug')
+
+        kurs = Course(
+            title=title,
+            description=description,
+            imageUrl=image,
+            isActive=isActive,
+            slug=slug,
+        )
+        kurs.save()  # Kursu veritabanına kaydet
+
+
+        return redirect("/kurs")
+
+    return render(request, 'courses/create_course.html')
 
 
 def kurslar(request):
