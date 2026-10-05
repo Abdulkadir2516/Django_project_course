@@ -53,8 +53,27 @@ def search(request):
     })
 
 def create_kurs(request):
+    if request.method == "POST":
+        form = CourseCreateForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            imageUrl = form.cleaned_data['imageUrl']
+            isActive = form.cleaned_data['isActive']
+            slug = form.cleaned_data['slug']
 
-    form = CourseCreateForm(request.POST or None)
+            # Yeni kursu oluştur ve kaydet
+            new_course = Course(
+                title=title,
+                description=description,
+                imageUrl=imageUrl,
+                isActive=isActive,
+                slug=slug
+            )
+            new_course.save()
+            return redirect(reverse('courses:detay', args=[new_course.slug]))  # Kurs detay sayfasına yönlendir
+    else:
+        form = CourseCreateForm()
     
     return render(request, 'courses/create_course.html', {"form": form})
 
