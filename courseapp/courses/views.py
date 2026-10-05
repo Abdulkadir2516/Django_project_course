@@ -4,6 +4,8 @@ from datetime import date, datetime
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+
+from courses.forms import CourseCreateForm
 from .models import Course ,Category
 from django.core.paginator import Paginator
 
@@ -52,29 +54,9 @@ def search(request):
 
 def create_kurs(request):
 
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        image = request.POST.get('imageUrl')  # Dosya yükleme için request.FILES kullanılır
-        isActive = request.POST.get('isActive', False) == 'on'  # Checkbox değeri
-        slug = request.POST.get('slug')
-
-        kurs = Course(
-            title=title,
-            description=description,
-            imageUrl=image,
-            isActive=isActive,
-            slug=slug,
-        )
-        kurs.save()  # Kursu veritabanına kaydet
-
-        if title == "" or description == "" or image == "" or slug == "":
-            return render(request, 'courses/create_course.html', {"error": True})
-
-        return redirect("/kurs")
-
-
-    return render(request, 'courses/create_course.html')
+    form = CourseCreateForm(request.POST or None)
+    
+    return render(request, 'courses/create_course.html', {"form": form})
 
 
 def kurslar(request):
