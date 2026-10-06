@@ -27,7 +27,7 @@ from courses.models import Course
 #                            )
 
 
-class CourseCreateForm(forms.ModelForm):
+class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['title', 'description', 'imageUrl', 'isActive', 'slug']

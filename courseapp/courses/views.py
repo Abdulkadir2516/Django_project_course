@@ -5,7 +5,7 @@ from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from courses.forms import CourseCreateForm
+from courses.forms import CourseForm
 from .models import Course ,Category
 from django.core.paginator import Paginator
 
@@ -54,13 +54,13 @@ def search(request):
 
 def create_kurs(request):
     if request.method == "POST":
-        form = CourseCreateForm(request.POST)
+        form = CourseForm(request.POST)
         if form.is_valid():
            form.save()  # Formu kaydet
            print(form.instance)  # Kaydedilen Course nesnesini yazdır
            return render(request, 'courses/details.html', {'course': form.instance})  # Kurs detay sayfasına yönlendir
     else:
-        form = CourseCreateForm()
+        form = CourseForm()
     
     return render(request, 'courses/create_course.html', {"form": form})
 
@@ -75,8 +75,27 @@ def course_list(request):
     })
 
 def course_edit(request, slug):
-    pass
+    course = get_object_or_404(Course, slug=slug)
 
+    if request.method == "POST":
+        form = CourseForm(request.POST, instance=course)
+        course.delete()  # Eski kursu sil
+        form.save()  # Formu kaydet
+       
+        return render(request, 'courses/details.html', {'course': form.instance})
+    else:
+        form = CourseForm(instance=course)
+
+    return render(request, 'courses/update_course.html', {"form": form, "course": course})
+
+def course_delete(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+
+    if request.method == "POST":
+        course.delete()  # Kursu sil
+        return redirect('course_list')  # Kurs listesi sayfasına yönlendir
+
+    return render(request, 'courses/course_delete.html', {"course": course})
 
 def detay(request, slug): 
     

@@ -34,6 +34,8 @@
                                 <!-- Add action buttons here, e.g., Edit, Delete -->
                                 <a href="{% url 'course_details' slug=course.slug %}" class="btn btn-primary btn-sm">View</a>
                                 <a href="{% url 'course_edit' slug=course.slug %}" class="btn btn-secondary btn-sm">Edit</a>
+                                <a href="{% url 'course_delete' slug=course.slug %}" class="btn btn-danger btn-sm">Delete</a>
+
                                 <!-- You can add more actions like Edit or Delete if needed -->
                             </td>
                         </tr>
