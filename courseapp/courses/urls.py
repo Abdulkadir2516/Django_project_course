@@ -11,7 +11,8 @@ urlpatterns = [
     path('', views.index, name='index'),  
     path('search', views.search, name='search'),
     path('create-kurs', views.create_kurs, name='create_course'),
-
+    path('course-list', views.course_list, name='course_list'),
+    path('course_edit/<slug:slug>', views.course_edit, name='course_edit'),
     path('<slug:slug>', views.detay, name='course_details'),
     path('kategori/<slug:slug>',views.getCoursesByCategory, name='getCoursesByCategory'),
     

@@ -68,6 +68,16 @@ def create_kurs(request):
 def kurslar(request):
     return HttpResponse("<h1>Kurslar sayfası</h1>")
 
+def course_list(request):
+    kurslar = Course.objects.all()
+    return render(request, 'courses/course_list.html', {
+        "courses": kurslar,
+    })
+
+def course_edit(request, slug):
+    pass
+
+
 def detay(request, slug): 
     
     """try:
