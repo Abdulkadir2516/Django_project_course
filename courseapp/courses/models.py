@@ -18,14 +18,6 @@ class Course(models.Model):
     slug = models.SlugField(null=False,blank=True, default="", editable=True, unique=True, db_index=True)
     categories = models.ManyToManyField(Category)
 
-
-    """
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Course, self).save(*args, **kwargs)
-        """
-
-
     def __str__(self):
         return f"{self.title} {self.date}"
 
