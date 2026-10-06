@@ -1,9 +1,26 @@
 from django import forms
 
 class CourseCreateForm(forms.Form):
-    title = forms.CharField(max_length=100)
-    description = forms.CharField(widget=forms.Textarea)
-    imageUrl = forms.CharField(max_length=200, required=False)  # Dosya yükleme için ImageField kullanılır
-    isActive = forms.BooleanField(required=False)  # Checkbox için BooleanField kullanılır
-    slug = forms.SlugField(max_length=100)
+    title = forms.CharField(label='Kurs Başlığı', 
+                            max_length=100, 
+                            error_messages={'required': 'Lütfen kurs başlığını girin.'}, 
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Kurs başlığını girin'})
+                            
+                            )
+    description = forms.CharField(label='Açıklama', 
+                                  widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Açıklama girin'})
+                                  )
+    imageUrl = forms.CharField(label='Resim URL', 
+                               max_length=200, 
+                               required=False, 
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Resim URL girin'})
+                               )
+    isActive = forms.BooleanField(label='Aktif', 
+                                  required=False, 
+                                  widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+                                  )
+    slug = forms.SlugField(label='Slug', 
+                           max_length=100, 
+                           widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug girin'})
+                           )
 
