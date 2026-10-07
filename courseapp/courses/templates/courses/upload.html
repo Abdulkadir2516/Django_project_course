@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row">
+           <div class="col-12">
+
+                <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="file" class="form-control-file" id="uploadImage" name="image" >
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary">Yükle</button>
+            
+                </form>
+
+                
+                    
+            </div>
+
+        </div>
+            
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %} {{course.title}} {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row">
+           <div class="col-12">
+
+                <p>Dosya başarıyla yüklendi!</p>
+                <p>Yüklenen dosya: {{ image.name }}</p>
+                <img src="{{ image.url }}" alt="Yüklenen Resim" class="img-fluid">
+
+            </div>
+
+        </div>
+            
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %} {{course.title}} {% endblock %}

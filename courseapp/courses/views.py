@@ -97,6 +97,16 @@ def course_delete(request, slug):
 
     return render(request, 'courses/course_delete.html', {"course": course})
 
+def upload(request):
+
+    if request.method == "POST":
+        image = request.FILES.get('image')  # Dosyayı al
+        print(image)  # Dosya bilgilerini yazdır
+        return render(request, 'courses/success.html', {"image": image})  # Dosya bilgilerini template'e gönder
+    
+    return render(request, 'courses/upload.html')
+
+
 def detay(request, slug): 
     
     """try:
