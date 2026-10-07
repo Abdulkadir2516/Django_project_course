@@ -60,4 +60,8 @@ class CourseForm(forms.ModelForm):
             'slug': TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug girin'}),
         }
 
-        
+
+class UploadForm(forms.Form):
+
+    image = forms.FileField(label='Resim Yükle', required=True, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
+

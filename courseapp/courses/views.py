@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
-from courses.forms import CourseForm
+from courses.forms import CourseForm, UploadForm
 from .models import Course ,Category
 from django.core.paginator import Paginator
 
@@ -120,14 +120,17 @@ def handle_uploaded_file(f):
 def upload(request):
 
     if request.method == "POST":
-        images = request.FILES.getlist('images')  # Dosyaları al
-        for image in images:
-            handle_uploaded_file(image)  # Her bir dosyayı kaydetmek için bir fonksiyon çağır
-        return render(request, 'courses/success.html', {"images": images})  # Dosya bilgilerini template'e gönder
+        form = UploadForm(request.POST, request.FILES)  # Formu oluştur
+        if form.is_valid():
+            
+            upimage = request.FILES.get('image')  # Dosyayı al
+            handle_uploaded_file(upimage)  # Dosyayı kaydetmek için bir fonksiyon çağır
+        
+            return render(request, 'courses/success.html', {"image": upimage})  # Dosya bilgilerini template'e gönder
+    else:
+        form = UploadForm()  # Formu oluştur
+        return render(request, 'courses/upload.html', {"form": form})  # Formu template'e gönder
     
-    return render(request, 'courses/upload.html')
-
-
 def detay(request, slug): 
     
     """try:
