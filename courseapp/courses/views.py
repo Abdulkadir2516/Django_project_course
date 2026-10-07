@@ -1,5 +1,6 @@
 
 from datetime import date, datetime
+import os
 
 from django.http import Http404, HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
@@ -97,12 +98,32 @@ def course_delete(request, slug):
 
     return render(request, 'courses/course_delete.html', {"course": course})
 
+def handle_uploaded_file(f):
+    kok = 'courses/static/courses/img/'
+
+    if os.path.exists(kok + f.name):
+
+        sayi = sum(1 for kok, _, dosyalar in os.walk(".") for dosya in dosyalar if os.path.splitext(dosya)[0] == "f.name")
+        
+        # Dosya zaten mevcut, farklı bir isimle kaydet
+        new_name = f"{sayi}_{f.name}"
+        with open(kok + new_name, 'wb+') as destination: 
+            for chunk in f.chunks():
+                destination.write(chunk)
+    else:
+        # Dosya mevcut değil, normal şekilde kaydet
+        with open(kok + f.name, 'wb+') as destination:
+            for chunk in f.chunks():
+                destination.write(chunk)
+
+
 def upload(request):
 
     if request.method == "POST":
-        image = request.FILES.get('image')  # Dosyayı al
-        print(image)  # Dosya bilgilerini yazdır
-        return render(request, 'courses/success.html', {"image": image})  # Dosya bilgilerini template'e gönder
+        images = request.FILES.getlist('images')  # Dosyaları al
+        for image in images:
+            handle_uploaded_file(image)  # Her bir dosyayı kaydetmek için bir fonksiyon çağır
+        return render(request, 'courses/success.html', {"images": images})  # Dosya bilgilerini template'e gönder
     
     return render(request, 'courses/upload.html')
 
