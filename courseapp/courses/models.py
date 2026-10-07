@@ -12,7 +12,7 @@ class Category(models.Model):
 class Course(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    imageUrl = models.CharField(max_length=50, blank=False)
+    image = models.ImageField(upload_to='img', default="")
     date = models.DateField(auto_now_add=True)
     isActive = models.BooleanField(default=True)
     slug = models.SlugField(null=False,blank=True, default="", editable=True, unique=True, db_index=True)
@@ -21,3 +21,6 @@ class Course(models.Model):
     def __str__(self):
         return f"{self.title} {self.date}"
 
+class UploadModel(models.Model):
+    image = models.ImageField(upload_to='images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)

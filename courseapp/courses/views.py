@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from courses.forms import CourseForm, UploadForm
-from .models import Course ,Category
+from .models import Course ,Category, UploadModel
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -55,7 +55,7 @@ def search(request):
 
 def create_kurs(request):
     if request.method == "POST":
-        form = CourseForm(request.POST)
+        form = CourseForm(request.POST, request.FILES)
         if form.is_valid():
            form.save()  # Formu kaydet
            print(form.instance)  # Kaydedilen Course nesnesini yazdır
@@ -79,7 +79,7 @@ def course_edit(request, slug):
     course = get_object_or_404(Course, slug=slug)
 
     if request.method == "POST":
-        form = CourseForm(request.POST, instance=course)
+        form = CourseForm(request.POST, request.FILES, instance=course,)
         course.delete()  # Eski kursu sil
         form.save()  # Formu kaydet
        
@@ -98,35 +98,17 @@ def course_delete(request, slug):
 
     return render(request, 'courses/course_delete.html', {"course": course})
 
-def handle_uploaded_file(f):
-    kok = 'courses/static/courses/img/'
-
-    if os.path.exists(kok + f.name):
-
-        sayi = sum(1 for kok, _, dosyalar in os.walk(".") for dosya in dosyalar if os.path.splitext(dosya)[0] == "f.name")
-        
-        # Dosya zaten mevcut, farklı bir isimle kaydet
-        new_name = f"{sayi}_{f.name}"
-        with open(kok + new_name, 'wb+') as destination: 
-            for chunk in f.chunks():
-                destination.write(chunk)
-    else:
-        # Dosya mevcut değil, normal şekilde kaydet
-        with open(kok + f.name, 'wb+') as destination:
-            for chunk in f.chunks():
-                destination.write(chunk)
-
-
 def upload(request):
 
     if request.method == "POST":
         form = UploadForm(request.POST, request.FILES)  # Formu oluştur
         if form.is_valid():
             
-            upimage = request.FILES.get('image')  # Dosyayı al
-            handle_uploaded_file(upimage)  # Dosyayı kaydetmek için bir fonksiyon çağır
-        
-            return render(request, 'courses/success.html', {"image": upimage})  # Dosya bilgilerini template'e gönder
+            model = UploadModel(image=form.cleaned_data['image'])  # Modeli oluştur
+            model.save()  
+            # Modeli kaydet
+
+            return render(request, 'courses/success.html', {"image": model.image})  # Dosya bilgilerini template'e gönder
     else:
         form = UploadForm()  # Formu oluştur
         return render(request, 'courses/upload.html', {"form": form})  # Formu template'e gönder

@@ -30,11 +30,11 @@ from courses.models import Course
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['title', 'description', 'imageUrl', 'isActive', 'slug']
+        fields = ['title', 'description','image', 'isActive', 'slug']
         labels = {
             'title': 'Kurs Başlığı',
             'description': 'Açıklama',
-            'imageUrl': 'Resim URL',
+            'image': 'Resim',
             'isActive': 'Aktif',
             'slug': 'Slug',
         }
@@ -45,9 +45,6 @@ class CourseForm(forms.ModelForm):
             'description': {
                 'required': 'Lütfen açıklamayı girin.',
             },
-            'imageUrl': {
-                'required': 'Lütfen resim URL\'sini girin.',
-            },
             'slug': {
                 'required': 'Lütfen slug\'ı girin.',
             },
@@ -55,7 +52,7 @@ class CourseForm(forms.ModelForm):
         widgets = {
             'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Kurs başlığını girin'}),
             'description': Textarea(attrs={'class': 'form-control', 'placeholder': 'Açıklama girin'}),
-            'imageUrl': TextInput(attrs={'class': 'form-control', 'placeholder': 'Resim URL girin'}),
+
             'isActive': CheckboxInput(attrs={'class': 'form-check-input'}),
             'slug': TextInput(attrs={'class': 'form-control', 'placeholder': 'Slug girin'}),
         }
@@ -63,5 +60,5 @@ class CourseForm(forms.ModelForm):
 
 class UploadForm(forms.Form):
 
-    image = forms.FileField(label='Resim Yükle', required=True, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
+    image = forms.ImageField(label='Resim Yükle', required=True, widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}))
 
